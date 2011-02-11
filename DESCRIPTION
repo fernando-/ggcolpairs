@@ -1,0 +1,13 @@
+Package: ggcolpairs
+Type: Package
+Title: Combination of GGplot2 plots into a matrix based on data columns.
+Version: 0.1
+Date: 2011-2-07
+Author: Fernando Fuentes <fuentes.f4@gmail.com>, 
+		George Ostrouchov <ostrouchovg@ornl.gov>
+Maintainer: Fernando Fuentes <fuentes.f4@gmail.com>
+Description: The ggcolpairs package allows the creation of a plot matrix 
+		based on column parameters from a dataset.
+Depends: ggplot2
+License: GPL-2
+LazyLoad: yes
