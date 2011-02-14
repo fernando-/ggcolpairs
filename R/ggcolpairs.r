@@ -1,4 +1,4 @@
-######################---------------#####################
+# ggcolpairs...
 
 ggcolpairs <- function (dataset, xlist, ylist, colour="default", ggdetails="default", margins="default", title="", legend="off")
 {
