@@ -138,29 +138,57 @@ generate_gpaxis <- function(dataset,xvar,yvar,daxis,cmargins)
 	return(cpaxis)
 }
 
+display_legend <- function(legendplot)
+{
+	legendplot <- legendplot + opts(keep="legend_box", legend.position = c(0.5,0.5) , legend.justification = "centre")
+	print(legendplot, vp = vplayout(rowpos,colpos))
+}
+
 vplayout <- function(x,y)
 {
 	#Credit Hadley for this vplayout function!!
 	viewport(layout.pos.row=x,layout.pos.col=y)
 }
 	
-cmp_setviewports <- function(xlist, ylist)
+cmp_setviewports <- function(xlist, ylist, title, legend, legendplot)
 {
 	# base layout matrix config
 	# cwidths, cheights -> sizes of labels, axis and plots space
-	# rows -> 3 -> plotspace, xaxes, xlabels
-	# cols -> 3 -> ylabels, yaxes, plotspace 
+	# rows -> 3 -> plotspace, xaxes, xlabels + title if needed
+	# cols -> 3 -> ylabels, yaxes, plotspace + title if needed
 	# ALERT: need to generalize, 
 	# might remove x/y label layouts and include them in custom axes
 	
-	grid.newpage()
+	legendplot <- legendplot + opts(keep="legend_box", legend.position = c(0.5,0.5) , legend.justification = "centre")
 	
-	cwidths = c(1, 3, 25)
-	cheights = c(25, 1, 1)
+	grid.newpage()
 	
 	xnum <- length(xlist)
 	ynum <- length(ylist)
 	ypos <- ynum
+	
+	if(title != "")
+	{
+		titlelayout=grid.layout(nrow=2, ncol=1, heights=c(1,27))
+		pushViewport(viewport(layout=titlelayout))
+		pushViewport(viewport(layout.pos.row=1, layout.pos.col=1))
+		grid.text(title)
+		popViewport()
+		pushViewport(viewport(layout.pos.row=2, layout.pos.col=1))
+	}
+	
+	if(legend != "off")
+	{
+		legendlayout=grid.layout(nrow=1, ncol=2, widths=c(29,3))
+		pushViewport(viewport(layout=legendlayout))		
+		pushViewport(viewport(layout.pos.row=1, layout.pos.col=2))
+		grid.draw(ggplotGrob(legendplot))
+		popViewport()
+		pushViewport(viewport(layout.pos.row=1, layout.pos.col=1))
+	}
+	
+	cwidths = c(1, 3, 25)
+	cheights = c(25, 1, 1)	
 	
 	baselayout=grid.layout(nrow=3, ncol=3, widths=cwidths, heights=cheights)
 	pushViewport(viewport(layout=baselayout))
