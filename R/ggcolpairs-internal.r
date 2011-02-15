@@ -1,6 +1,14 @@
-######################---------------#####################
+# Package ggplot2 is required
 library(ggplot2)
 
+# Internal package functions 
+# --------------------------
+
+# Generates grob of a ggplot object which only contains a x axis
+# @param p plot object to be striped
+# @param offset_v vertical offset to move the axis in order to account for grid space
+# @param cmargins custom margin space surrounding the plots
+# @keywords hplot
 just_x_axis <- function(p, offset_v=0, cmargins)
 {
 	margin1 = cmargins[1]
@@ -28,6 +36,11 @@ just_x_axis <- function(p, offset_v=0, cmargins)
 	return(p.Grob.xaxis)
 }
 
+# Generates grob of a ggplot object which only contains a y axis
+# @param p plot object to be striped
+# @param offset_h horizontal offset to move the axis in order to account for grid space
+# @param cmargins custom margin space surrounding the plots
+# @keywords hplot
 just_y_axis <- function(p, offset_h=0, cmargins)
 {
 	margin1 = cmargins[1]
@@ -55,6 +68,10 @@ just_y_axis <- function(p, offset_h=0, cmargins)
 	return(p.Grob.yaxis)
 }
 
+# Returns which axis is desired to be generated based on matrix position
+# @param xpos x axis position in the matrix
+# @param ypos y axis position in the matrix
+# @keywords internal
 desired_axis <- function(xpos,ypos)
 {
 	if(xpos == 1 && ypos == 1)
@@ -69,9 +86,11 @@ desired_axis <- function(xpos,ypos)
 	return(daxis)
 }
 
+# Calculates the offset margin space needed for the y axis of a plot based on axis text character length
+# @param p plot object for which to base the calculation
+# @keywords internal
 yaxis_offset <- function(p)
-{	
-	# calculates the y offset needed for a plot
+{		
 	pGrob <- ggplotGrob(p)
 	pylab <- getGrob(pGrob,"axis.text.y.text",grep=TRUE)
 	maxchar <- max(nchar(pylab[["label"]]))
@@ -80,6 +99,14 @@ yaxis_offset <- function(p)
 	return(ya_offset)
 }
 
+# Generates ggplot based on parameter data
+# @param dataset original data set
+# @param xvar string column name of desired x axis
+# @param yvar string column name of desired y axis
+# @param cpcolour string column name to color the data, default is none
+# @param ggdetails additional layer to build ggplot, default is geom_point, can be combined for multiple layers
+# @param cmargins custom margin space surrounding the plots
+# @keywords hplot
 generate_ggplot <- function(dataset,xvar,yvar,cpcolour,ggdetails,cmargins)
 {
 	margin1 = cmargins[1]
@@ -90,13 +117,13 @@ generate_ggplot <- function(dataset,xvar,yvar,cpcolour,ggdetails,cmargins)
 	if(cpcolour != "default")
 		cplot <- cplot + aes_string(colour = cpcolour)
 	
-	#defaults to geom_point unless ggdetails are specified
+	# defaults to geom_point unless ggdetails are specified
 	if(ggdetails != "default")
 		cplot <- cplot + ggdetails
 	else
 		cplot <- cplot + geom_point()
 		
-	#removes legend and axis in order to create same size plots overall
+	# removes legend and axis in order to create same size plots overall
 	cplot <- cplot + opts(
 		legend.position="none",
 		axis.text.x = theme_blank(), 
@@ -112,24 +139,20 @@ generate_ggplot <- function(dataset,xvar,yvar,cpcolour,ggdetails,cmargins)
 	return(cplot)
 }
 
+# Generates transparent ggplot to be customized into axis only
+# @param dataset original data set
+# @param xvar string column name of desired x axis
+# @param yvar string column name of desired y axis
+# @param daxis string value of the desired axis
+# @param cmargins custom margin space surrounding the plots
+# @keywords hplot
 generate_gpaxis <- function(dataset,xvar,yvar,daxis,cmargins)
 {
-	#use the just_?_axis functions to customize multiplot axes
-	#use daxis to know which axis to generate
-	#...
-	# done - NEED TO GENERALIZE OFFSETS -- calculate according to max xvar/yvar size? absolute value?
-	# NEED TO GENERALIZE X offset?
-	# xy offset woes....
-	#...
-		
 	cpaxis <- ggplot(data = dataset, aes_string(x = xvar, y = yvar)) + geom_point(colour = "transparent")
 	
 	offset_h <- yaxis_offset(cpaxis)
 	offset_v = -1.6
 	
-	# if(daxis == "xy")
-		# cpaxis <- just_xy_axis(cpaxis,offset_h,offset_v,cmargins)
-	# else 
 	if(daxis == "x")
 		cpaxis <- just_x_axis(cpaxis,offset_v,cmargins)
 	else if(daxis == "y")
@@ -138,28 +161,27 @@ generate_gpaxis <- function(dataset,xvar,yvar,daxis,cmargins)
 	return(cpaxis)
 }
 
-display_legend <- function(legendplot)
-{
-	legendplot <- legendplot + opts(keep="legend_box", legend.position = c(0.5,0.5) , legend.justification = "centre")
-	print(legendplot, vp = vplayout(rowpos,colpos))
-}
-
+# Structures viewport layout positions based on x and y parameters
+# @param x viewport row position
+# @param y viewport column position
+# @keywords internal
+# @author Hadley Wickham \email{h.wickham@@gmail.com}
 vplayout <- function(x,y)
-{
-	#Credit Hadley for this vplayout function!!
+{	
 	viewport(layout.pos.row=x,layout.pos.col=y)
 }
-	
+
+# Configures the matrix plot and sets viewports and prepares them for printing axes and plots
+# @param xlist list of string column names of the dataset representing x axes
+# @param ylist list of string column names of the dataset representing y axes
+# @param title string of desired title for resulting matrix
+# @param legend string representing legend visibility
+# @param legendplot ggplot object for which to base the legend
+# @keywords internal
 cmp_setviewports <- function(xlist, ylist, title, legend, legendplot)
-{
-	# base layout matrix config
-	# cwidths, cheights -> sizes of labels, axis and plots space
-	# rows -> 3 -> plotspace, xaxes, xlabels + title if needed
-	# cols -> 3 -> ylabels, yaxes, plotspace + title if needed
-	# ALERT: need to generalize, 
-	# might remove x/y label layouts and include them in custom axes
-	
-	legendplot <- legendplot + opts(keep="legend_box", legend.position = c(0.5,0.5) , legend.justification = "centre")
+{	
+	if(legend != "off")
+		legendplot <- legendplot + opts(keep="legend_box", legend.position = c(0.5,0.5), legend.justification = "centre")
 	
 	grid.newpage()
 	
@@ -187,13 +209,17 @@ cmp_setviewports <- function(xlist, ylist, title, legend, legendplot)
 		pushViewport(viewport(layout.pos.row=1, layout.pos.col=1))
 	}
 	
+	# cwidths, cheights -> sizes of labels, axis and plots space
 	cwidths = c(1, 3, 25)
 	cheights = c(25, 1, 1)	
 	
+	# rows -> 3 -> plotspace, xaxes, xlabels
+	# cols -> 3 -> ylabels, yaxes, plotspace
 	baselayout=grid.layout(nrow=3, ncol=3, widths=cwidths, heights=cheights)
 	pushViewport(viewport(layout=baselayout))
-
-	#---start y axis labels---
+	
+	# TRY: might remove x/y label layouts and include them in custom axes ggplot objects
+	# ---start y axis labels---
 	pushViewport(viewport(layout.pos.row=1, layout.pos.col=1))
 	pushViewport(viewport(layout=grid.layout(nrow=ynum, ncol=1)))
 	
@@ -208,9 +234,9 @@ cmp_setviewports <- function(xlist, ylist, title, legend, legendplot)
 		} else
 			popViewport(3)
 	}
-	#---finit y axis labels---
+	# ---finit y axis labels---
 		
-	#---start x axis labels---
+	# ---start x axis labels---
 	pushViewport(viewport(layout.pos.row=3, layout.pos.col=3))
 	pushViewport(viewport(layout=grid.layout(nrow=1, ncol=xnum)))
 	
@@ -223,12 +249,11 @@ cmp_setviewports <- function(xlist, ylist, title, legend, legendplot)
 		else
 			popViewport(3)
 	}
-	#---finit x axis labels---
+	# ---finit x axis labels---
 	
-	#---Plots viewport configuration---
-	
-	#set viewport on allocated plotspace
+	# ---Plots viewport configuration---	
+	# set viewport on allocated plotspace
 	pushViewport(viewport(layout.pos.row=1, layout.pos.col=3))
-	#generate new viewport grid of plots according to data
+	# generate new viewport grid of plots according to data
 	pushViewport(viewport(layout=grid.layout(nrow=ynum, ncol=xnum)))
 }
