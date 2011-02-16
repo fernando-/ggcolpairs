@@ -14,5 +14,5 @@
 \examples{\dontrun{
 # example of use
 p <- ggplot(cars, aes(speed,dist)) + geom_point()
-p.xaxis <- just_x_axis(p, offset_v=0, cmargins=c(0.1,-0.99))
+p.xaxis <- just_x_axis(p, offset_v=0, cmargins=c(0.1,-0.4))
 }}

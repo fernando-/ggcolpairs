@@ -19,5 +19,5 @@
 dsmall <- diamonds[sample(nrow(diamonds), 100), ] 
 xvar <- "carat"
 yvar <- "price"
-clean_plot <- generate_ggplot(dsmall, xvar, yvar, cpcolour = "cut", cmargins=c(0.1,-0.99))
+clean_plot <- generate_ggplot(dsmall, xvar, yvar, cpcolour = "cut", cmargins=c(0.1,-0.4))
 }}

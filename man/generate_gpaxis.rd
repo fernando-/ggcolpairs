@@ -17,5 +17,5 @@
 dsmall <- diamonds[sample(nrow(diamonds), 100), ] 
 xvar <- "carat"
 yvar <- "price"
-plot.yaxis.grob <- generate_gpaxis(dsmall, xvar, yvar, daxis = "y", cmargins=c(0.1,-0.99))
+plot.yaxis.grob <- generate_gpaxis(dsmall, xvar, yvar, daxis = "y", cmargins=c(0.1,-0.4))
 }}

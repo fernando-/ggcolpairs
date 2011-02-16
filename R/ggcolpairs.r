@@ -4,7 +4,7 @@
 # @param ylist list of string column names of the dataset representing y axes
 # @param colour string column name to color the data, default is none
 # @param ggdetails additional layer include in the ggplot2 plots, default is geom_point, can be combined for multiple layers
-# @param margins margin space surrounding the plots, default is lines based, 0.1 for top and right and -0.99 for bottom and left
+# @param margins margin space surrounding the plots, default is lines based, 0.1 for top and right and -0.4 for bottom and left
 # @param title string of desired title for resulting matrix, default is none
 # @param legend string representing legend visibility, default is off
 # @keywords hplot
