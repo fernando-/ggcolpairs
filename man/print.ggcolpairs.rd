@@ -6,8 +6,8 @@
 \description{
 Print function for ggcolpairs. Plots matrix on current graphics device.
 }
-\usage{print.ggcolpairs(colpairs, ...)}
+\usage{print.ggcolpairs(x, ...)}
 \arguments{
-\item{colpairs}{ggcolpairs object to display}
+\item{x}{ggcolpairs object to display}
 \item{...}{not used}
 }

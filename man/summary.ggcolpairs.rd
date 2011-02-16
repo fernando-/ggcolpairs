@@ -6,9 +6,9 @@
 \description{
 Display information of a ggcolpairs object.
 }
-\usage{summary.ggcolpairs(colpairs, ...)}
+\usage{summary.ggcolpairs(object, ...)}
 \arguments{
-\item{colpairs}{ggcolpairs object to summarise}
+\item{object}{ggcolpairs object to summarise}
 \item{...}{not used}
 }
 \examples{\dontrun{
