@@ -1,8 +1,8 @@
 Package: ggcolpairs
 Type: Package
 Title: Combination of GGplot2 plots into a matrix based on data columns.
-Version: 0.2
-Date: 2011-2-14
+Version: 0.2.2
+Date: 2011-2-15
 Author: Fernando Fuentes <fuentes.f4@gmail.com>, 
 		George Ostrouchov <ostrouchovg@ornl.gov>
 Maintainer: Fernando Fuentes <fuentes.f4@gmail.com>
