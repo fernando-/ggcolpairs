@@ -4,7 +4,7 @@
 \usage{cmp_setviewports(xlist, ylist, title, legend, legendplot)}
 \description{Configures the matrix plot and sets viewports and prepares them for printing axes and plots}
 \author{Fernando Fuentes \email{fuentes.f4@gmail.com}}
-\keyword{internal}
+\keyword{methods}
 \arguments{
 \item{xlist}{list of desired x columns in "string" format}
 \item{ylist}{list of desired y columns in "string" format}

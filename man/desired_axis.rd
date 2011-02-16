@@ -4,7 +4,7 @@
 \usage{desired_axis(xpos,ypos)}
 \description{Returns which axis is desired to be generated based on matrix position}
 \author{Fernando Fuentes \email{fuentes.f4@gmail.com}}
-\keyword{internal}
+\keyword{methods}
 \arguments{
 \item{xpos}{x axis position in the matrix}
 \item{ypos}{y axis position in the matrix}

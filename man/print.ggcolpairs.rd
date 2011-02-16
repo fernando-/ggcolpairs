@@ -2,7 +2,7 @@
 \alias{print.ggcolpairs}
 \title{Print ggcolpairs}
 \author{Fernando Fuentes \email{fuentes.f4@gmail.com}}
-\keyword{internal}
+\keyword{print}
 \description{
 Print function for ggcolpairs. Plots matrix on current graphics device.
 }

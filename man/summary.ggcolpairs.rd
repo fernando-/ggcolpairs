@@ -2,7 +2,7 @@
 \alias{summary.ggcolpairs}
 \title{Summary of ggcolpairs object}
 \author{Fernando Fuentes \email{fuentes.f4@gmail.com}}
-\keyword{internal}
+\keyword{misc}
 \description{
 Display information of a ggcolpairs object.
 }

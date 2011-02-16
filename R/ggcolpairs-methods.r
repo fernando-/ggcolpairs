@@ -71,7 +71,7 @@ just_y_axis <- function(p, offset_h=0, cmargins)
 # Returns which axis is desired to be generated based on matrix position
 # @param xpos x axis position in the matrix
 # @param ypos y axis position in the matrix
-# @keywords internal
+# @keywords methods
 desired_axis <- function(xpos,ypos)
 {
 	if(xpos == 1 && ypos == 1)
@@ -88,7 +88,7 @@ desired_axis <- function(xpos,ypos)
 
 # Calculates the offset margin space needed for the y axis of a plot based on axis text character length
 # @param p plot object for which to base the calculation
-# @keywords internal
+# @keywords methods
 yaxis_offset <- function(p)
 {		
 	pGrob <- ggplotGrob(p)
@@ -177,7 +177,7 @@ vplayout <- function(x,y)
 # @param title string of desired title for resulting matrix
 # @param legend string representing legend visibility
 # @param legendplot ggplot object for which to base the legend
-# @keywords internal
+# @keywords methods
 cmp_setviewports <- function(xlist, ylist, title, legend, legendplot)
 {	
 	if(legend != "off")
