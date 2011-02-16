@@ -10,7 +10,7 @@
 # @keywords hplot
 ggcolpairs <- function (dataset, xlist, ylist, colour="default", ggdetails="default", margins="default", title="", legend="off")
 {
-	ifelse(margins == "default", cmargins <- c(0.1,-0.7), cmargins <- margins)
+	ifelse(margins == "default", cmargins <- c(0.1,-0.4), cmargins <- margins)
 		
 	xnum <- length(xlist)
 	ynum <- length(ylist)
