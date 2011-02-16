@@ -82,7 +82,7 @@ print.ggcolpairs <- function(x, ...)
 	plots_list <- x$plots_list
 	paxis_list <- x$paxis_list
 	title <- x$title
-	legend <- colpairs$legend 
+	legend <- x$legend 
 	
 	xnum <- length(xlist)
 	ynum <- length(ylist)
@@ -158,11 +158,11 @@ summary.ggcolpairs <- function(object, ...)
 {
 	cat("[Matrix plot]\n\n")
 	cat("Title: \n")
-	print(colpairs$title)
+	print(object$title)
 	cat("\nColumns: \n")
-	print(colpairs$xlist)
+	print(object$xlist)
 	cat("\nRows: \n")
-	print(colpairs$ylist)
+	print(object$ylist)
 	cat("\n")
 }
 
