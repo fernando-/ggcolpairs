@@ -104,7 +104,7 @@ yaxis_offset <- function(p)
 # @param xvar string column name of desired x axis
 # @param yvar string column name of desired y axis
 # @param cpcolour string column name to color the data, default is none
-# @param ggdetails additional layer to build ggplot, default is geom_point, can be combined for multiple layers
+# @param ggdetails additional layer to build ggplot, default is geom_point, can combine multiple layers with a list
 # @param cmargins custom margin space surrounding the plots
 # @keywords hplot
 generate_ggplot <- function(dataset,xvar,yvar,cpcolour,ggdetails,cmargins)
@@ -118,10 +118,7 @@ generate_ggplot <- function(dataset,xvar,yvar,cpcolour,ggdetails,cmargins)
 		cplot <- cplot + aes_string(colour = cpcolour)
 	
 	# defaults to geom_point unless ggdetails are specified
-	if(ggdetails != "default")
-		cplot <- cplot + ggdetails
-	else
-		cplot <- cplot + geom_point()
+	ifelse(ggdetails != "default", cplot <- cplot + ggdetails, cplot <- cplot + geom_point())
 		
 	# removes legend and axis in order to create same size plots overall
 	cplot <- cplot + opts(
