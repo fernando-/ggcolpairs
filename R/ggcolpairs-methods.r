@@ -1,6 +1,3 @@
-# Package ggplot2 is required
-library(ggplot2)
-
 # Internal package functions 
 # --------------------------
 
